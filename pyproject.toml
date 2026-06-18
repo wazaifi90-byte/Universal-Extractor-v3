@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "universal-extractor"
+version = "3.0.0"
+description = "Advanced multi-engine game file extraction tool with AI and Web Dashboard"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "GPL-3.0-only"}
+keywords = ["extractor", "game", "unity", "unreal", "forensics", "reverse-engineering"]
+
+authors = [
+    {name = "Universal Extractor Team"}
+]
+
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Utilities",
+    "Topic :: System :: Archiving :: Compression",
+]
+
+dependencies = [
+    "Pillow>=11.0.0",
+    "lz4>=4.0.0",
+    "xxhash>=3.5.0",
+    "rich>=13.0.0",
+    "flask>=3.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/universal-extractor"
+Repository = "https://github.com/yourusername/universal-extractor"
+Documentation = "https://universal-extractor.readthedocs.io"
+
+[project.scripts]
+universal-extractor = "main:main_cli"
+uni-extract-web = "web_app.app:run_web"
+
+[tool.setuptools]
+packages.find.include = ["core*", "decoders*", "engines*", "plugins*", "web_app*", "ai*", "lang*"]
+packages.find.exclude = ["tests*", "Universal_Extractor*"]
+py-modules = ["main", "registry", "tools_updater"]
+package-data."*" = ["*.json", "*.html", "*.png"]
