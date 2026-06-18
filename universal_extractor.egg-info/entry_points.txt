@@ -1,0 +1,3 @@
+[console_scripts]
+uni-extract-web = web_app.app:run_web
+universal-extractor = main:main_cli
