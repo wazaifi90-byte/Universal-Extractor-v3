@@ -1,0 +1,399 @@
+{
+    "deflate": {
+        "magic": ["0x78 0x9C", "0x78 0xDA", "0x78 0x01"],
+        "extension": ".zlib",
+        "engine": "generic"
+    },
+    "lz4": {
+        "magic": ["0x04 0x22 0x4D 0x18"],
+        "extension": ".lz4",
+        "engine": "generic"
+    },
+    "lzma": {
+        "magic": ["0x5D 0x00 0x00", "0x5D 0x01 0x00"],
+        "extension": ".lzma",
+        "engine": "generic"
+    },
+    "gzip": {
+        "magic": ["0x1F 0x8B"],
+        "extension": ".gz",
+        "engine": "generic"
+    },
+    "zip": {
+        "magic": ["0x50 0x4B 0x03 0x04", "0x50 0x4B 0x05 0x06", "0x50 0x4B 0x07 0x08"],
+        "extension": ".zip",
+        "engine": "generic"
+    },
+    "zstd": {
+        "magic": ["0x28 0xB5 0x2F 0xFD"],
+        "extension": ".zst",
+        "engine": "generic"
+    },
+    "bzip2": {
+        "magic": ["0x42 0x5A 0x68"],
+        "extension": ".bz2",
+        "engine": "generic"
+    },
+    "lzo": {
+        "magic": ["0x89 0x4C 0x5A 0x4F"],
+        "extension": ".lzo",
+        "engine": "generic"
+    },
+    "lzss": {
+        "magic": ["0x4C 0x5A 0x53 0x53"],
+        "extension": ".lzss",
+        "engine": "generic"
+    },
+    "unity_bundle": {
+        "magic": ["UnityWeb", "UnityFS", "UnityRaw"],
+        "extension": ".unity3d",
+        "engine": "unity"
+    },
+    "unity_assets": {
+        "magic": ["0x06 0x00 0x00 0x00 0x00 0x00 0x00 0x00"],
+        "extension": ".assets",
+        "engine": "unity"
+    },
+    "unreal_pak": {
+        "magic": ["0x41 0x0E 0x00 0x00 0x00 0x00 0x00 0x00"],
+        "extension": ".pak",
+        "engine": "unreal"
+    },
+    "unreal_uexp": {
+        "magic": ["0xFF 0xFF 0xFF 0xFF 0x08 0x00 0x00 0x00"],
+        "extension": ".uexp",
+        "engine": "unreal"
+    },
+    "cocos2d": {
+        "magic": ["0x43 0x43 0x42 0x32", "0x43 0x43 0x42 0x41"],
+        "extension": ".csb",
+        "engine": "cocos2dx"
+    },
+    "godot_pck": {
+        "magic": ["GDPC"],
+        "extension": ".pck",
+        "engine": "godot"
+    },
+    "rpgmvp": {
+        "magic": ["0x52 0x50 0x47 0x4D 0x56"],
+        "extension": ".mvp",
+        "engine": "generic"
+    },
+    "pvrtc": {
+        "magic": ["PVR!"],
+        "extension": ".pvr",
+        "engine": "generic"
+    },
+    "etc1": {
+        "magic": ["ETC1"],
+        "extension": ".etc1",
+        "engine": "generic"
+    },
+    "bres": {
+        "magic": ["BRES"],
+        "extension": ".bres",
+        "engine": "nintendo"
+    },
+    "yaz0": {
+        "magic": ["Yaz0", "Yay0"],
+        "extension": ".yaz0",
+        "engine": "nintendo"
+    },
+    "psarc": {
+        "magic": ["PSAR"],
+        "extension": ".psarc",
+        "engine": "sony"
+    },
+    "xpr0": {
+        "magic": ["XPR0"],
+        "extension": ".xpr",
+        "engine": "xbox"
+    },
+    "png": {
+        "magic": ["0x89 0x50 0x4E 0x47"],
+        "extension": ".png",
+        "engine": "generic"
+    },
+    "jpeg": {
+        "magic": ["0xFF 0xD8 0xFF"],
+        "extension": ".jpg",
+        "engine": "generic"
+    },
+    "gif": {
+        "magic": ["GIF87a", "GIF89a"],
+        "extension": ".gif",
+        "engine": "generic"
+    },
+    "bmp": {
+        "magic": ["0x42 0x4D"],
+        "extension": ".bmp",
+        "engine": "generic"
+    },
+    "tga": {
+        "magic": ["0x00 0x00 0x02", "0x00 0x00 0x03"],
+        "extension": ".tga",
+        "engine": "generic"
+    },
+    "tiff": {
+        "magic": ["0x49 0x49 0x2A 0x00", "0x4D 0x4D 0x00 0x2A"],
+        "extension": ".tiff",
+        "engine": "generic"
+    },
+    "ico": {
+        "magic": ["0x00 0x00 0x01 0x00"],
+        "extension": ".ico",
+        "engine": "generic"
+    },
+    "webp": {
+        "magic": ["RIFF"],
+        "extension": ".webp",
+        "engine": "generic",
+        "sub_check": "WEBP"
+    },
+    "ogg": {
+        "magic": ["OggS"],
+        "extension": ".ogg",
+        "engine": "generic"
+    },
+    "wav": {
+        "magic": ["RIFF"],
+        "extension": ".wav",
+        "engine": "generic",
+        "sub_check": "WAVE"
+    },
+    "mp3": {
+        "magic": ["0xFF 0xFB", "0xFF 0xF3", "0xFF 0xF2"],
+        "extension": ".mp3",
+        "engine": "generic"
+    },
+    "flac": {
+        "magic": ["fLaC"],
+        "extension": ".flac",
+        "engine": "generic"
+    },
+    "riff": {
+        "magic": ["RIFF"],
+        "extension": ".riff",
+        "engine": "generic"
+    },
+    "gameloft_archive": {
+        "magic": ["GAMEDATA", "0x47 0x41 0x4D 0x45"],
+        "extension": ".dat",
+        "engine": "gameloft"
+    },
+    "konami_cpk": {
+        "magic": ["CPK "],
+        "extension": ".cpk",
+        "engine": "konami"
+    },
+    "konami_afs": {
+        "magic": ["0x41 0x46 0x53 0x00"],
+        "extension": ".afs",
+        "engine": "konami"
+    },
+    "konami_arc": {
+        "magic": ["KONAMI", "0x41 0x52 0x43 0x00"],
+        "extension": ".arc",
+        "engine": "konami"
+    },
+    "wwise_bnk": {
+        "magic": ["BKHD"],
+        "extension": ".bnk",
+        "engine": "generic"
+    },
+    "wwise_wem": {
+        "magic": ["0x42 0x4B 0x48 0x44", "0x52 0x46 0x46"],
+        "extension": ".wem",
+        "engine": "generic"
+    },
+    "fsb": {
+        "magic": ["FSB4", "FSB5"],
+        "extension": ".fsb",
+        "engine": "generic"
+    },
+    "xma": {
+        "magic": ["0x58 0x4D 0x41 0x33", "0x58 0x4D 0x41 0x32"],
+        "extension": ".xma",
+        "engine": "generic"
+    },
+    "bink": {
+        "magic": ["BINK", "BIKi"],
+        "extension": ".bik",
+        "engine": "generic"
+    },
+    "crx": {
+        "magic": ["0x63 0x72 0x78 0x00"],
+        "extension": ".crx",
+        "engine": "generic"
+    },
+    "dds": {
+        "magic": ["DDS "],
+        "extension": ".dds",
+        "engine": "generic"
+    },
+    "gtf": {
+        "magic": ["0x47 0x54 0x46 0x00"],
+        "extension": ".gtf",
+        "engine": "generic"
+    },
+    "astc": {
+        "magic": ["0x13 0xAB 0xA1 0x5C"],
+        "extension": ".astc",
+        "engine": "generic"
+    },
+    "ktx": {
+        "magic": ["0xAB 0x4B 0x54 0x58", "KTX "],
+        "extension": ".ktx",
+        "engine": "generic"
+    },
+    "rl7": {
+        "magic": ["0x52 0x4C 0x37 0x00"],
+        "extension": ".rl7",
+        "engine": "generic"
+    },
+    "gameloft_pak": {
+        "magic": ["GLPK"],
+        "extension": ".pak",
+        "engine": "gameloft"
+    },
+    "gameloft_tex": {
+        "magic": ["GLTX"],
+        "extension": ".gltx",
+        "engine": "gameloft"
+    },
+    "gameloft_sh": {
+        "magic": ["GLSH"],
+        "extension": ".glsh",
+        "engine": "gameloft"
+    },
+    "sqex_pak": {
+        "magic": ["SqPack"],
+        "extension": ".pack",
+        "engine": "generic"
+    },
+    "msf": {
+        "magic": ["0x4D 0x53 0x46 0x00"],
+        "extension": ".msf",
+        "engine": "generic"
+    },
+    "genh": {
+        "magic": ["GENH"],
+        "extension": ".genh",
+        "engine": "generic"
+    },
+    "cryengine": {
+        "magic": ["0x00 0x00 0x00 0x00"],
+        "extension": ".cry",
+        "engine": "cryengine"
+    },
+    "cryengine_chunk": {
+        "magic": ["0x00 0x00 0x00 0x00 0x43 0x68 0x75 0x6E"],
+        "extension": ".crychunk",
+        "engine": "cryengine"
+    },
+    "source_vpk": {
+        "magic": ["VPK"],
+        "extension": ".vpk",
+        "engine": "source"
+    },
+    "source_bsp": {
+        "magic": ["0x56 0x42 0x53 0x50"],
+        "extension": ".bsp",
+        "engine": "source"
+    },
+    "renpy_rpa": {
+        "magic": ["RPA"],
+        "extension": ".rpa",
+        "engine": "renpy"
+    },
+    "rgss": {
+        "magic": ["RGSS"],
+        "extension": ".rgss",
+        "engine": "rpgmaker"
+    },
+    "rgd": {
+        "magic": ["RGD"],
+        "extension": ".rgd",
+        "engine": "rpgmaker"
+    },
+    "fmod_fev": {
+        "magic": ["FEV "],
+        "extension": ".fev",
+        "engine": "fmod"
+    },
+    "quake_wad": {
+        "magic": ["WAD2", "WAD3"],
+        "extension": ".wad",
+        "engine": "idtech"
+    },
+    "doom_wad": {
+        "magic": ["IWAD", "PWAD"],
+        "extension": ".wad",
+        "engine": "idtech"
+    },
+    "scummvm_sky": {
+        "magic": ["SKY"],
+        "extension": ".sky",
+        "engine": "scummvm"
+    },
+    "havok_hkx": {
+        "magic": ["0xE0 0x4D 0x48 0x4B"],
+        "extension": ".hkx",
+        "engine": "havok"
+    },
+    "ea_ast": {
+        "magic": ["0x41 0x53 0x54 0x00"],
+        "extension": ".ast",
+        "engine": "ea"
+    },
+    "ea_abk": {
+        "magic": ["ABK "],
+        "extension": ".abk",
+        "engine": "ea"
+    },
+    "ubisoft_pck": {
+        "magic": ["0x50 0x43 0x4B 0x00"],
+        "extension": ".pck",
+        "engine": "ubisoft"
+    },
+    "nintendo_sarc": {
+        "magic": ["SARC"],
+        "extension": ".sarc",
+        "engine": "nintendo"
+    },
+    "nintendo_bfwav": {
+        "magic": ["0x42 0x46 0x57 0x41"],
+        "extension": ".bfwav",
+        "engine": "nintendo"
+    },
+    "nintendo_bfstm": {
+        "magic": ["0x42 0x46 0x53 0x54"],
+        "extension": ".bfstm",
+        "engine": "nintendo"
+    },
+    "nintendo_bfsha": {
+        "magic": ["0x42 0x46 0x53 0x48"],
+        "extension": ".bfsha",
+        "engine": "nintendo"
+    },
+    "blender_blend": {
+        "magic": ["BLENDER"],
+        "extension": ".blend",
+        "engine": "generic"
+    },
+    "gltf_bin": {
+        "magic": ["glTF"],
+        "extension": ".glb",
+        "engine": "generic"
+    },
+    "fbx_binary": {
+        "magic": ["Kaydara FBX"],
+        "extension": ".fbx",
+        "engine": "generic"
+    },
+    "miles_xa": {
+        "magic": ["0x58 0x41 0x00 0x00"],
+        "extension": ".xa",
+        "engine": "miles"
+    }
+}
