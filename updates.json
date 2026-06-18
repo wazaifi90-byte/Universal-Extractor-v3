@@ -1,0 +1,30 @@
+{
+    "version": "1.0.0",
+    "description": "Universal Extractor remote update manifest",
+    "files": {
+        "signatures.json": {
+            "version": "1.0",
+            "description": "File signatures for auto-detection"
+        },
+        "config.json": {
+            "version": "1.0",
+            "description": "Runtime configuration"
+        },
+        "main.py": {
+            "version": "1.0",
+            "description": "CLI entry point"
+        },
+        "registry.py": {
+            "version": "1.0",
+            "description": "Decoder registry"
+        },
+        "lang/en.json": {
+            "version": "1.0",
+            "description": "English language file"
+        },
+        "lang/ar.json": {
+            "version": "1.0",
+            "description": "Arabic language file"
+        }
+    }
+}
