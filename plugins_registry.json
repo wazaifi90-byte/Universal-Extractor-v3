@@ -1,0 +1,42 @@
+{
+    "version": "1.0",
+    "marketplace_url": "https://raw.githubusercontent.com/universal-extractor/plugins/main/registry.json",
+    "plugins": [
+        {
+            "id": "ue5-pak",
+            "name": "Unreal Engine 5 PAK Extractor",
+            "author": "Community",
+            "version": "1.0.0",
+            "repo": "https://raw.githubusercontent.com/universal-extractor/plugins/main/ue5_pak.py",
+            "description": "Support for UE5 .pak files with new encryption",
+            "type": "decoder"
+        },
+        {
+            "id": "frostbite",
+            "name": "Frostbite Engine Decoder",
+            "author": "Community",
+            "version": "0.9.0",
+            "repo": "https://raw.githubusercontent.com/universal-extractor/plugins/main/frostbite.py",
+            "description": "Experimental support for Frostbite archives (Battlefield, FIFA)",
+            "type": "decoder"
+        },
+        {
+            "id": "rage-archive",
+            "name": "RAGE Engine Archive",
+            "author": "Community",
+            "version": "1.0.0",
+            "repo": "https://raw.githubusercontent.com/universal-extractor/plugins/main/rage_archive.py",
+            "description": "Rockstar Advanced Game Engine archive support (GTA V, RDR2)",
+            "type": "decoder"
+        },
+        {
+            "id": "id-tech",
+            "name": "id Tech Engine Extractor",
+            "author": "Community",
+            "version": "1.1.0",
+            "repo": "https://raw.githubusercontent.com/universal-extractor/plugins/main/idtech.py",
+            "description": "Support for id Tech 4/5/6 engine archives (Doom, Quake)",
+            "type": "decoder"
+        }
+    ]
+}
