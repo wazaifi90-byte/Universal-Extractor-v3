@@ -1,0 +1,10 @@
+ai
+core
+decoders
+engines
+lang
+main
+plugins
+registry
+tools_updater
+web_app
