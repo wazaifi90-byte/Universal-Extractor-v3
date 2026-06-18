@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="html-root">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#111111">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="UniExtractor">
+<link rel="manifest" href="/static/manifest.json">
+<link rel="icon" type="image/png" href="/static/favicon.png">
+<link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+<title>Universal Extractor v3.0</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.30.0/dist/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0a0a;--bg2:#111111;--bg3:#1a1a1a;--bg4:#222;--border:#2a2a2a;--border2:#333;--text:#ffffff;--text2:#aaaaaa;--text3:#666;--neon:#c6f135;--neon2:#a8d820;--neon3:rgba(198,241,53,0.12);--neon-glow:rgba(198,241,53,0.08);--red:#ff4d4d;--green:#4dff91;--amber:#ffb347;--blue:#47b3ff}
+.light-mode{--bg:#f8f8f5;--bg2:#ffffff;--bg3:#f0f0ec;--bg4:#e8e8e4;--border:#e0e0da;--border2:#d0d0ca;--text:#111111;--text2:#555555;--text3:#999;--neon:#5a8a00;--neon2:#4a7200;--neon3:rgba(90,138,0,0.08);--neon-glow:rgba(90,138,0,0.06);--red:#cc2200;--green:#006633;--amber:#996600;--blue:#0055cc}
+body,#root{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;min-height:100vh;transition:background .3s,color .3s}
+.shell{max-width:100%;padding:0}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500}
+.logo-icon{width:28px;height:28px;background:var(--neon3);border:1px solid var(--neon);border-radius:6px;display:flex;align-items:center;justify-content:center}
+.logo-icon i{color:var(--neon);font-size:14px}
+.logo-text{color:var(--text)}.logo-accent{color:var(--neon);font-weight:600}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.theme-toggle{background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:4px;display:flex;gap:2px}
+.theme-btn{width:28px;height:22px;border:none;border-radius:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;background:transparent;color:var(--text2)}
+.theme-btn.active{background:var(--neon);color:#111}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block;margin-left:4px}
+.status-label{font-size:12px;color:var(--text2)}
+.nav{display:flex;gap:2px;padding:8px 20px;background:var(--bg2);border-bottom:1px solid var(--border);overflow-x:auto}
+.nav-btn{padding:6px 14px;border:none;border-radius:6px;cursor:pointer;font-size:12px;font-weight:500;background:transparent;color:var(--text2);display:flex;align-items:center;gap:6px;white-space:nowrap}
+.nav-btn:hover{background:var(--bg3);color:var(--text)}
+.nav-btn.active{background:var(--neon3);color:var(--neon);border:1px solid rgba(198,241,53,.25)}
+.light-mode .nav-btn.active{border:1px solid rgba(90,138,0,.2)}
+.content{padding:20px}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:20px}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.stat-label{font-size:11px;color:var(--text3);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:5px}
+.stat-label i{font-size:13px}.stat-value{font-size:22px;font-weight:600;color:var(--text);line-height:1}
+.stat-value.neon{color:var(--neon)}.stat-sub{font-size:11px;color:var(--text3);margin-top:4px}
+.stat-badge{display:inline-flex;align-items:center;gap:3px;font-size:11px;padding:2px 7px;border-radius:4px;margin-top:6px}
+.badge-green{background:rgba(77,255,145,0.1);color:var(--green)}
+.badge-amber{background:rgba(255,179,71,0.1);color:var(--amber)}
+.badge-red{background:rgba(255,77,77,0.1);color:var(--red)}
+.badge-blue{background:rgba(71,179,255,0.1);color:var(--blue)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+@media(max-width:600px){.two-col{grid-template-columns:1fr}}
+.panel{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.panel-head{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.panel-title{font-size:12px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:7px}
+.panel-title i{color:var(--neon);font-size:14px}
+.panel-action{font-size:11px;color:var(--neon);background:var(--neon3);border:none;border-radius:5px;padding:3px 10px;cursor:pointer;font-weight:500}
+.panel-body{padding:14px 16px}
+.file-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}
+.file-row:last-child{border-bottom:none}
+.file-name{color:var(--text);font-weight:500;display:flex;align-items:center;gap:7px}
+.file-name i{color:var(--text3);font-size:13px}
+.file-type{display:inline-block;padding:1px 7px;border-radius:4px;font-size:10px;font-weight:600;background:var(--neon3);color:var(--neon);margin-right:6px}
+.file-size{color:var(--text2);font-size:11px}
+.log-row{padding:7px 0;border-bottom:1px solid var(--border);font-size:11px;display:flex;gap:10px;align-items:flex-start}
+.log-row:last-child{border-bottom:none}
+.log-time{color:var(--text3);white-space:nowrap;font-family:monospace;font-size:10px;padding-top:1px}
+.log-msg{color:var(--text2);line-height:1.4}
+.log-ok{color:var(--green)}.log-err{color:var(--red)}.log-info{color:var(--blue)}.log-warn{color:var(--amber)}
+.sig-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sig-item{background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:10px 12px}
+.sig-name{font-size:12px;font-weight:600;color:var(--neon);margin-bottom:4px}
+.sig-magic{font-family:monospace;font-size:10px;color:var(--text2);background:var(--bg);border-radius:3px;padding:2px 5px;display:inline-block;margin-bottom:4px}
+.sig-engine{font-size:10px;color:var(--text3)}
+.upload-zone{border:1.5px dashed var(--border2);border-radius:10px;padding:32px 20px;text-align:center;cursor:pointer;transition:all .2s;background:var(--bg3)}
+.upload-zone:hover{border-color:var(--neon);background:var(--neon-glow)}
+.upload-zone.drag-over{border-color:var(--neon);background:var(--neon3)}
+.upload-icon{font-size:28px;color:var(--text3);margin-bottom:10px}
+.upload-zone:hover .upload-icon{color:var(--neon)}
+.upload-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:4px}
+.upload-sub{font-size:11px;color:var(--text3)}.upload-hint{font-size:11px;color:var(--neon);margin-top:8px}
+.cfg-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:12px}
+.cfg-row:last-child{border-bottom:none}
+.cfg-label{color:var(--text2);font-weight:500}.cfg-key{font-size:11px;color:var(--text3);margin-top:1px}
+.toggle{width:36px;height:20px;border-radius:10px;border:none;cursor:pointer;position:relative;background:var(--border2)}
+.toggle.on{background:var(--neon)}.toggle.off{background:var(--border2)}
+.toggle::after{content:'';position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#111;transition:left .2s}
+.toggle.on::after{right:3px}.toggle.off::after{right:19px}
+.cfg-input{background:var(--bg);border:1px solid var(--border2);border-radius:5px;color:var(--text);font-size:12px;padding:4px 8px;width:70px;text-align:left}
+.cfg-input:focus{outline:none;border-color:var(--neon)}
+.watch-bar{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
+.watch-info{display:flex;align-items:center;gap:10px;font-size:12px}
+.watch-indicator{width:8px;height:8px;border-radius:50%;background:var(--text3)}
+.watch-indicator.active{background:var(--green);box-shadow:0 0 0 3px rgba(77,255,145,.15)}
+.watch-label{color:var(--text);font-weight:500}
+.watch-dir{color:var(--text3);font-family:monospace;font-size:11px}
+.btn{padding:6px 14px;border-radius:6px;border:none;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px}
+.btn-neon{background:var(--neon);color:#111}.btn-neon:hover{opacity:.9}
+.btn-outline{background:transparent;border:1px solid var(--border2);color:var(--text2)}
+.btn-outline:hover{border-color:var(--neon);color:var(--neon)}
+.btn-danger{background:rgba(255,77,77,.1);border:1px solid rgba(255,77,77,.2);color:var(--red)}
+.queue-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}
+.queue-row:last-child{border-bottom:none}
+.queue-num{color:var(--text3);font-family:monospace;width:16px;text-align:left}
+.queue-name{flex:1;color:var(--text);font-weight:500}
+.queue-type{font-size:10px;font-weight:600;padding:1px 7px;border-radius:4px}
+.q-ok{background:rgba(77,255,145,.1);color:var(--green)}
+.q-err{background:rgba(255,77,77,.1);color:var(--red)}
+.q-pend{background:rgba(255,179,71,.1);color:var(--amber)}
+.section-full{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:14px}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.pulsing{animation:pulse 1.5s ease-in-out infinite}
+</style>
+</head>
+<body>
+<div class="shell" id="root">
+  <div class="topbar">
+    <div class="logo">
+      <div class="logo-icon"><i class="ti ti-binary"></i></div>
+      <span class="logo-text">Asset<span class="logo-accent">Decoder</span></span>
+    </div>
+    <select id="lang-select" onchange="switchLanguage(this.value)" style="background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:2px 6px;font-size:11px;cursor:pointer">
+      <option value="ar">العربية</option>
+      <option value="en">English</option>
+    </select>
+    <div class="topbar-right">
+      <span class="status-label"><span class="status-dot" id="live-dot"></span>Live</span>
+      <div class="theme-toggle">
+        <button class="theme-btn active" id="btn-dark" onclick="setTheme('dark')"><i class="ti ti-moon-stars"></i></button>
+        <button class="theme-btn" id="btn-light" onclick="setTheme('light')"><i class="ti ti-sun"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <button class="nav-btn active" onclick="showTab('overview',this)"><i class="ti ti-layout-dashboard"></i>نظرة عامة</button>
+    <button class="nav-btn" onclick="showTab('files',this)"><i class="ti ti-files"></i>الملفات</button>
+    <button class="nav-btn" onclick="showTab('signatures',this)"><i class="ti ti-fingerprint"></i>البصمات</button>
+    <button class="nav-btn" onclick="showTab('decoders',this)"><i class="ti ti-puzzle"></i>المفككات</button>
+    <button class="nav-btn" onclick="showTab('logs',this)"><i class="ti ti-terminal-2"></i>السجلات</button>
+    <button class="nav-btn" onclick="showTab('crypto',this)"><i class="ti ti-key"></i>التشفير</button>
+    <button class="nav-btn" onclick="showTab('plugins_tab',this)"><i class="ti ti-plug"></i>الإضافات</button>
+    <button class="nav-btn" onclick="showTab('config',this)"><i class="ti ti-settings"></i>الإعدادات</button>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div id="welcome-tip" style="background:var(--neon3);border:1px solid var(--neon);border-radius:10px;margin:10px 20px 0;padding:12px 16px;font-size:12px;display:flex;align-items:center;gap:10px">
+  <i class="ti ti-info-circle" style="color:var(--neon);font-size:16px"></i>
+  <span style="flex:1">مرحباً بك! يمكنك تثبيت هذه الواجهة كتطبيق مستقل على جهازك: اضغط <b>⋮</b> ← <b>تثبيت التطبيق</b> في شريط المتصفح.</span>
+  <button onclick="localStorage.setItem('welcome_dismissed','1');document.getElementById('welcome-tip').style.display='none'" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px"><i class="ti ti-x"></i></button>
+</div>
+
+<div id="update-banner" style="display:none;background:var(--bg2);border:1px solid var(--neon);border-radius:10px;margin:10px 20px 0;padding:12px 16px">
+  <div style="display:flex;align-items:center;justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:10px;font-size:12px">
+      <i class="ti ti-cloud-download" style="color:var(--neon);font-size:18px"></i>
+      <span>يوجد تحديث جديد: <b id="update-version"></b></span>
+      <span style="color:var(--text3);font-size:11px" id="update-desc"></span>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-neon" onclick="applyUpdate()" style="padding:4px 12px;font-size:11px"><i class="ti ti-download"></i> تحديث الآن</button>
+      <button class="btn btn-outline" onclick="dismissUpdate()" style="padding:4px 12px;font-size:11px"><i class="ti ti-x"></i></button>
+    </div>
+  </div>
+</div>
+
+<div class="content" id="tab-overview">
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-label"><i class="ti ti-file-import"></i>ملفات المدخلات</div><div class="stat-value neon" id="s-inputs">0</div><div class="stat-sub">في مجلد inputs</div></div>
+      <div class="stat-card"><div class="stat-label"><i class="ti ti-file-export"></i>ملفات المخرجات</div><div class="stat-value" id="s-outputs">0</div><div class="stat-sub">جاهزة للتحميل</div></div>
+      <div class="stat-card"><div class="stat-label"><i class="ti ti-fingerprint"></i>البصمات</div><div class="stat-value neon" id="s-sigs">77</div><div class="stat-badge badge-green"><i class="ti ti-check"></i>نشطة</div></div>
+      <div class="stat-card"><div class="stat-label"><i class="ti ti-puzzle"></i>المفككات</div><div class="stat-value" id="s-decs">57</div><div class="stat-badge badge-blue">محمّلة</div></div>
+      <div class="stat-card"><div class="stat-label"><i class="ti ti-cpu"></i>الحالة</div><div class="stat-value" id="s-status-val" style="font-size:14px;padding-top:4px">جاهز</div><div class="stat-badge badge-green" id="s-status-badge"><i class="ti ti-circle-check"></i>مستعد</div></div>
+      <div class="stat-card"><div class="stat-label"><i class="ti ti-eye"></i>المراقبة</div><div class="stat-value" id="s-watch-val" style="font-size:14px;padding-top:4px">متوقف</div><div class="stat-badge badge-amber" id="s-watch-badge">غير نشط</div></div>
+    </div>
+
+    <div class="watch-bar">
+      <div class="watch-info">
+        <div class="watch-indicator" id="watch-dot"></div>
+        <div><div class="watch-label" id="watch-label">مراقبة المجلد: متوقفة</div><div class="watch-dir" id="watch-dir">inputs/ ← outputs/</div></div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-neon" id="watch-start-btn" onclick="toggleWatch(true)"><i class="ti ti-player-play"></i>تشغيل</button>
+        <button class="btn btn-outline" id="watch-stop-btn" onclick="toggleWatch(false)" style="display:none"><i class="ti ti-player-pause"></i>إيقاف</button>
+        <button class="btn btn-outline" onclick="refreshStatus()"><i class="ti ti-refresh"></i>تحديث</button>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="panel">
+        <div class="panel-head"><div class="panel-title"><i class="ti ti-file-check"></i>آخر الملفات المعالجة</div></div>
+        <div class="panel-body" id="recent-files"><div class="file-row"><span style="color:var(--text3);font-size:12px">لا توجد ملفات</span></div></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><div class="panel-title"><i class="ti ti-terminal-2"></i>آخر السجلات</div></div>
+        <div class="panel-body" id="mini-logs"><div class="log-row"><span style="color:var(--text3);font-size:12px">لا توجد سجلات</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILES -->
+  <div class="content" id="tab-files" style="display:none">
+    <div class="section-full">
+      <div class="panel-head"><div class="panel-title"><i class="ti ti-upload"></i>رفع ملف جديد</div></div>
+      <div class="panel-body">
+        <div class="upload-zone" id="dropZone" onclick="document.getElementById('file-input').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleDrop(event)">
+          <div class="upload-icon"><i class="ti ti-cloud-upload"></i></div>
+          <div class="upload-title">اسحب الملف أو انقر للاختيار</div>
+          <div class="upload-sub">.bin .dat .cpk .unity3d .pak وغيرها (58+ صيغة)</div>
+          <div class="upload-hint">رفع تلقائي + كشف النوع</div>
+          <input type="file" id="file-input" style="display:none" onchange="handleUpload(this)" multiple>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:10px;font-size:12px">
+          <i class="ti ti-folder" style="color:var(--neon);font-size:14px"></i>
+          <span style="color:var(--text2)">مكان الحفظ:</span>
+          <select id="save-location" style="background:var(--bg);border:1px solid var(--border2);border-radius:5px;color:var(--text);font-size:12px;padding:4px 8px;flex:1">
+            <option value="default">المجلد الافتراضي (outputs/)</option>
+            <option value="desktop">سطح المكتب ← Extracted/</option>
+            <option value="desktop:Extracted">Extracted/ على سطح المكتب</option>
+            <option value="desktop:مستخلصات">مستخلصات/ على سطح المكتب</option>
+          </select>
+        </div>
+        <div id="upload-queue" style="margin-top:10px;font-size:12px"></div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="panel">
+        <div class="panel-head"><div class="panel-title"><i class="ti ti-inbox"></i>ملفات المدخلات</div><button class="panel-action" onclick="processAll()">▶ معالجة الكل</button></div>
+        <div class="panel-body" id="inputs-list"><div class="file-row"><span style="color:var(--text3);font-size:12px">لا توجد ملفات</span></div></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><div class="panel-title"><i class="ti ti-package-export"></i>ملفات المخرجات</div></div>
+        <div class="panel-body" id="outputs-list"><div class="file-row"><span style="color:var(--text3);font-size:12px">لا توجد ملفات</span></div></div>
+      </div>
+    </div>
+
+    <div class="section-full">
+      <div class="panel-head"><div class="panel-title"><i class="ti ti-alert-triangle"></i>الملفات الفاشلة</div></div>
+      <div class="panel-body" id="errors-list"><div class="queue-row"><span style="color:var(--text3);font-size:12px">لا توجد أخطاء</span></div></div>
+    </div>
+  </div>
+
+  <!-- SIGNATURES -->
+  <div class="content" id="tab-signatures" style="display:none">
+    <div class="section-full">
+      <div class="panel-head"><div class="panel-title"><i class="ti ti-fingerprint"></i>البصمات المدعومة<span style="color:var(--neon);margin-right:8px;font-size:11px" id="sig-count">0 بصمة</span></div></div>
+      <div class="panel-body"><div class="sig-grid" id="sig-grid"></div></div>
+    </div>
+  </div>
+
+  <!-- DECODERS -->
+  <div class="content" id="tab-decoders" style="display:none">
+    <div class="section-full">
+      <div class="panel-head"><div class="panel-title"><i class="ti ti-puzzle"></i>المفككات المحمّلة<span style="color:var(--neon);margin-right:8px;font-size:11px" id="dec-count">0 مفككًا</span></div></div>
+      <div class="panel-body"><div id="dec-list"></div></div>
+    </div>
+  </div>
+
+  <!-- LOGS -->
+  <div class="content" id="tab-logs" style="display:none">
+    <div class="section-full">
+      <div class="panel-head"><div class="panel-title"><i class="ti ti-terminal-2"></i>سجلات النظام</div></div>
+      <div class="panel-body" id="logs-full"><div class="log-row"><span style="color:var(--text3);font-size:12px">لا توجد سجلات</span></div></div>
+    </div>
+  </div>
+
+  <!-- CRYPTO -->
+  <div class="content" id="tab-crypto" style="display:none">
+    <div class="section-full">
+      <div class="panel-head"><div class="panel-title"><i class="ti ti-key"></i>كشف التشفير التلقائي</div></div>
+      <div class="panel-body">
+        <div class="upload-zone" id="cryptoDropZone" onclick="document.getElementById('crypto-input').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleCryptoDrop(event)">
+          <div class="upload-icon"><i class="ti ti-shield-lock"></i></div>
+          <div class="upload-title">اسحب ملفاً لتحليل التشفير</div>
+          <div class="upload-sub">يكشف XOR، AES، والأنتروبي تلقائياً</div>
+          <input type="file" id="crypto-input" style="display:none" onchange="cryptoAnalyze(this)">
+        </div>
+        <div id="crypto-results" style="margin-top:14px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLUGINS -->
+  <div class="content" id="tab-plugins_tab" style="display:none">
+    <div class="section-full">
+      <div class="panel-head"><div class="panel-title"><i class="ti ti-plug"></i>متجر الإضافات</div><span style="font-size:11px;color:var(--text3)" id="plugins-count">0 إضافة</span></div>
+      <div class="panel-body" id="plugins-list"><div class="queue-row"><span style="color:var(--text3);font-size:12px">جاري التحميل...</span></div></div>
+    </div>
+    <div class="section-full" style="margin-top:14px">
+      <div class="panel-head"><div class="panel-title"><i class="ti ti-package"></i>الإضافات المثبتة محلياً</div></div>
+      <div class="panel-body" id="local-plugins"><div class="queue-row"><span style="color:var(--text3);font-size:12px">جاري التحميل...</span></div></div>
+    </div>
+  </div>
+
+  <!-- CONFIG -->
+  <div class="content" id="tab-config" style="display:none">
+    <div class="section-full">
+      <div class="panel-head"><div class="panel-title"><i class="ti ti-settings"></i>إعدادات المعالجة</div><button class="btn btn-neon" onclick="saveConfig()" style="padding:5px 14px;font-size:12px"><i class="ti ti-device-floppy"></i>حفظ</button></div>
+      <div class="panel-body">
+        <div class="cfg-row"><div><div class="cfg-label">المعالجة المتوازية</div><div class="cfg-key">parallel</div></div><button class="toggle off" id="tog-parallel" onclick="toggleCfg(this)"></button></div>
+        <div class="cfg-row"><div><div class="cfg-label">عدد العمال</div><div class="cfg-key">max_workers</div></div><input type="number" class="cfg-input" id="cfg-workers" value="4" min="1" max="32"></div>
+        <div class="cfg-row"><div><div class="cfg-label">مفتاح XOR (hex)</div><div class="cfg-key">xor_key</div></div><input type="text" class="cfg-input" id="cfg-xor" value="" placeholder="auto"></div>
+        <div class="cfg-row"><div><div class="cfg-label">مجلد المدخلات</div><div class="cfg-key">input_dir</div></div><input type="text" class="cfg-input" id="cfg-indir" value="inputs" style="width:100px"></div>
+        <div class="cfg-row"><div><div class="cfg-label">مجلد المخرجات</div><div class="cfg-key">output_dir</div></div><input type="text" class="cfg-input" id="cfg-outdir" value="outputs" style="width:100px"></div>
+        <div class="cfg-row"><div><div class="cfg-label">حفظ تلقائي على سطح المكتب</div><div class="cfg-key">أنشئ مجلد Extracted/ عند المعالجة</div></div><button class="toggle off" id="tog-desktop-save" onclick="toggleCfg(this)"></button></div>
+        <div id="cfg-status" style="margin-top:12px;font-size:12px;color:var(--neon);display:none"><i class="ti ti-circle-check"></i> تم الحفظ بنجاح</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="processing-overlay" id="processingOverlay" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:1000;display:none;align-items:center;justify-content:center">
+  <div style="background:var(--bg2);padding:40px;border-radius:16px;text-align:center;border:1px solid var(--border)">
+    <div style="width:48px;height:48px;border:4px solid var(--border2);border-top-color:var(--neon);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px"></div>
+    <h2 style="color:var(--text);font-size:16px">جاري المعالجة...</h2>
+  </div>
+</div>
+<style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+
+<script>
+const API = {base: ''};
+async function api(path, opts={}) {
+  try { const r = await fetch(API.base + path, {headers:{'Content-Type':'application/json'}, ...opts}); return await r.json(); }
+  catch(e) { return null; }
+}
+
+function setTheme(t) {
+  document.getElementById('root').className = t === 'light' ? 'shell light-mode' : 'shell';
+  document.getElementById('btn-dark').className = t === 'dark' ? 'theme-btn active' : 'theme-btn';
+  document.getElementById('btn-light').className = t === 'light' ? 'theme-btn active' : 'theme-btn';
+}
+
+const tabs = ['overview','files','signatures','decoders','logs','crypto','plugins_tab','config'];
+function showTab(name, btn) {
+  tabs.forEach(t => { const el = document.getElementById('tab-'+t); if(el) el.style.display = t === name ? 'block' : 'none'; });
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  else { const i = tabs.indexOf(name); const b = document.querySelectorAll('.nav-btn'); if(b[i]) b[i].classList.add('active'); }
+  if(name === 'signatures') loadSigs();
+  if(name === 'decoders') loadDecoders();
+  if(name === 'config') loadConfig();
+  if(name === 'plugins_tab') loadPlugins();
+}
+
+async function refreshStatus() {
+  const d = await api('/api/status');
+  if(!d) return;
+  document.getElementById('s-inputs').textContent = d.inputs.length;
+  document.getElementById('s-outputs').textContent = d.outputs.length;
+  document.getElementById('s-sigs').textContent = d.signatures;
+  document.getElementById('s-decs').textContent = d.decoders;
+
+  const dot = document.getElementById('live-dot');
+  dot.style.background = '#aaa'; setTimeout(() => dot.style.background = '', 500);
+
+  if(d.processing) { document.getElementById('processingOverlay').style.display = 'flex'; }
+  else { document.getElementById('processingOverlay').style.display = 'none'; }
+
+  toggleWatchUI(d.watching);
+
+  // recent outputs
+  const rf = document.getElementById('recent-files');
+  if(d.outputs.length) {
+    rf.innerHTML = d.outputs.slice(-5).reverse().map(f =>
+      '<div class="file-row"><div class="file-name"><i class="ti ti-file-check"></i>'+esc(f.name)+'</div><span class="file-size">'+sz(f.size)+'</span></div>'
+    ).join('');
+  }
+
+  // inputs list
+  const il = document.getElementById('inputs-list');
+  if(d.inputs.length) {
+    il.innerHTML = d.inputs.map(f =>
+      '<div class="file-row"><div class="file-name"><i class="ti ti-file-zip"></i>'+esc(f.name)+'<span class="file-type">'+esc(f.type)+'</span></div><span class="file-size">'+sz(f.size)+'</span></div>'
+    ).join('');
+  }
+
+  // outputs list
+  const ol = document.getElementById('outputs-list');
+  if(d.outputs.length) {
+    ol.innerHTML = d.outputs.map(f =>
+      '<div class="file-row"><div class="file-name"><i class="ti ti-file-check"></i>'+esc(f.name)+'</div><button class="btn btn-outline" style="padding:2px 8px;font-size:11px" onclick="downloadFile(\''+esc(f.name)+'\')"><i class="ti ti-download"></i></button></div>'
+    ).join('');
+  }
+}
+
+function toggleWatchUI(active) {
+  const dot = document.getElementById('watch-dot');
+  dot.className = 'watch-indicator' + (active ? ' active' : '');
+  document.getElementById('watch-label').textContent = active ? 'مراقبة المجلد: نشطة' : 'مراقبة المجلد: متوقفة';
+  document.getElementById('watch-start-btn').style.display = active ? 'none' : '';
+  document.getElementById('watch-stop-btn').style.display = active ? '' : 'none';
+  document.getElementById('s-watch-val').textContent = active ? 'نشطة' : 'متوقف';
+  const wb = document.getElementById('s-watch-badge');
+  wb.className = 'stat-badge ' + (active ? 'badge-green' : 'badge-amber');
+  wb.innerHTML = active ? '<i class="ti ti-eye"></i> مراقب' : 'غير نشط';
+}
+
+async function toggleWatch(start) {
+  const r = await api('/api/watch', {method:'POST', body:JSON.stringify({action: start ? 'start' : 'stop'})});
+  if(r) { toggleWatchUI(start); }
+}
+
+async function handleUpload(input) {
+  for(const file of input.files) await uploadFile(file);
+  input.value = '';
+}
+
+async function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('dropZone').classList.remove('drag-over');
+  for(const file of e.dataTransfer.files) await uploadFile(file);
+}
+
+async function uploadFile(file) {
+  const q = document.getElementById('upload-queue');
+  const item = document.createElement('div'); item.className = 'queue-row';
+  item.innerHTML = '<span class="queue-name">'+esc(file.name)+'</span><span class="queue-type q-pend">رفع...</span>';
+  q.appendChild(item);
+  const saveTo = document.getElementById('save-location').value;
+  const fd = new FormData(); fd.append('file', file); fd.append('process', 'true'); fd.append('save_to', saveTo);
+  try {
+    const r = await fetch('/api/upload', {method:'POST', body:fd});
+    const d = await r.json();
+    const status = d.status || 'failed';
+    item.querySelector('.queue-type').textContent = status === 'ok' ? '✓ تم' : (status === 'uploaded' ? '↑ رفع' : '✗ فشل');
+    item.querySelector('.queue-type').className = 'queue-type ' + (status === 'ok' ? 'q-ok' : 'q-err');
+    if(status === 'ok' && d.save_dir) {
+      const btn = document.createElement('button');
+      btn.className = 'btn btn-outline'; btn.style.cssText = 'padding:2px 8px;font-size:11px';
+      btn.innerHTML = '<i class="ti ti-folder-open"></i>';
+      btn.onclick = function(){ fetch('/api/open-folder',{method:'POST',body:JSON.stringify({folder:d.save_dir})}); };
+      item.appendChild(btn);
+    }
+    refreshStatus(); loadLogs();
+  } catch(e) {
+    item.querySelector('.queue-type').textContent = '✗ فشل';
+    item.querySelector('.queue-type').className = 'queue-type q-err';
+  }
+  setTimeout(() => { if(q.contains(item)) q.removeChild(item); }, 6000);
+}
+
+async function processAll() {
+  const d = await api('/api/status');
+  if(!d || !d.inputs.length) return;
+  const saveTo = document.getElementById('save-location').value;
+  document.getElementById('processingOverlay').style.display = 'flex';
+  const r = await api('/api/process', {method:'POST', body:JSON.stringify({files: d.inputs.map(f=>f.name), save_to: saveTo})});
+  document.getElementById('processingOverlay').style.display = 'none';
+  if(r) {
+    const saved = r.results.filter(x => x.save_dir);
+    if(saved.length) {
+      const dir = saved[0].save_dir;
+      const btn = document.createElement('div');
+      btn.style.cssText = 'margin-top:10px;display:flex;gap:10px;align-items:center;font-size:12px';
+      btn.innerHTML = '<span style="color:var(--green)"><i class="ti ti-circle-check"></i> تم استخراج '+saved.length+' ملف</span>' +
+        '<button class="btn btn-neon" onclick="fetch(\'/api/open-folder\',{method:\'POST\',body:JSON.stringify({folder:\''+dir+'\'})})" style="padding:4px 12px;font-size:11px"><i class="ti ti-folder-open"></i> فتح المجلد</button>';
+      document.getElementById('upload-queue').prepend(btn);
+      setTimeout(() => { if(btn.parentNode) btn.parentNode.removeChild(btn); }, 10000);
+    }
+    refreshStatus(); loadLogs();
+  }
+}
+
+function downloadFile(name) {
+  window.open('/api/download/' + encodeURIComponent(name), '_blank');
+}
+
+async function loadSigs() {
+  const d = await api('/api/signatures');
+  const grid = document.getElementById('sig-grid');
+  const cnt = document.getElementById('sig-count');
+  if(!d || !Object.keys(d).length) { grid.innerHTML = '<span style="color:var(--text3);font-size:12px">لا توجد بصمات</span>'; cnt.textContent = '0 بصمة'; return; }
+  const entries = Object.entries(d);
+  cnt.textContent = entries.length + ' بصمة';
+  grid.innerHTML = entries.map(([name, info]) =>
+    '<div class="sig-item"><div class="sig-name">'+esc(name)+'</div><div class="sig-magic">'+(info.magic||[]).slice(0,2).join(' / ')+'</div><div class="sig-engine"><i class="ti ti-cpu"></i> '+(info.engine||'generic')+'</div></div>'
+  ).join('');
+}
+
+async function loadDecoders() {
+  const d = await api('/api/decoders');
+  const list = document.getElementById('dec-list');
+  const cnt = document.getElementById('dec-count');
+  if(!d || !d.length) { list.innerHTML = '<span style="color:var(--text3);font-size:12px">لا توجد مفككات</span>'; cnt.textContent = '0 مفككًا'; return; }
+  cnt.textContent = d.length + ' مفككًا';
+  const byEngine = {};
+  d.forEach(dc => { if(!byEngine[dc.engine]) byEngine[dc.engine] = []; byEngine[dc.engine].push(dc.name); });
+  list.innerHTML = Object.entries(byEngine).map(([engine, names]) =>
+    '<div style="margin-bottom:8px"><div style="font-size:11px;color:var(--neon);font-weight:600;margin-bottom:4px">🔧 '+esc(engine)+' ('+names.length+')</div>'+
+    names.map(n => '<span style="display:inline-block;background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:2px 8px;font-size:11px;margin:2px;color:var(--text2)">'+esc(n)+'</span>').join('')+
+    '</div>'
+  ).join('');
+}
+
+async function loadLogs() {
+  const d = await api('/api/logs');
+  const el = document.getElementById('logs-full');
+  const mini = document.getElementById('mini-logs');
+  if(!d || !d.length) {
+    const msg = '<div class="log-row"><span style="color:var(--text3);font-size:12px">لا توجد سجلات</span></div>';
+    el.innerHTML = msg; mini.innerHTML = msg; return;
+  }
+  const html = d.map(l => {
+    const lines = l.content.split('\n').filter(Boolean).slice(0,3);
+    return lines.map(line => {
+      const cls = line.includes('Success') || line.includes('OK') ? 'log-ok' : (line.includes('Error') || line.includes('Failed') ? 'log-err' : (line.includes('Warning') ? 'log-warn' : 'log-info'));
+      const time = l.file.replace('session_','').replace('.log','').replace(/_/g,' ');
+      return '<div class="log-row"><span class="log-time">'+esc(time)+'</span><span class="log-msg '+cls+'">'+esc(line)+'</span></div>';
+    }).join('');
+  }).join('');
+  el.innerHTML = html || '<div class="log-row"><span style="color:var(--text3)">لا توجد سجلات</span></div>';
+  mini.innerHTML = html.split('</div>').slice(0,4).join('</div>') + '</div>';
+}
+
+async function loadConfig() {
+  const d = await api('/api/config');
+  if(!d) return;
+  document.getElementById('tog-parallel').className = 'toggle ' + (d.settings?.parallel ? 'on' : 'off');
+  document.getElementById('cfg-workers').value = d.settings?.max_workers || 4;
+  document.getElementById('cfg-xor').value = d.settings?.xor_key !== null && d.settings?.xor_key !== undefined ? '0x' + d.settings.xor_key.toString(16) : '';
+  document.getElementById('cfg-indir').value = d.paths?.input_dir || 'inputs';
+  document.getElementById('cfg-outdir').value = d.paths?.output_dir || 'outputs';
+}
+
+async function saveConfig() {
+  const body = {
+    settings: {
+      parallel: document.getElementById('tog-parallel').className.includes('on'),
+      max_workers: parseInt(document.getElementById('cfg-workers').value) || 4,
+      xor_key: document.getElementById('cfg-xor').value ? parseInt(document.getElementById('cfg-xor').value, 16) : null
+    },
+    paths: {
+      input_dir: document.getElementById('cfg-indir').value,
+      output_dir: document.getElementById('cfg-outdir').value
+    }
+  };
+  const r = await api('/api/config', {method:'PUT', body:JSON.stringify(body)});
+  const s = document.getElementById('cfg-status');
+  if(r) { s.style.display = 'block'; setTimeout(() => s.style.display = 'none', 2500); }
+}
+
+async function loadErrors() {
+  const d = await api('/api/errors');
+  const el = document.getElementById('errors-list');
+  if(!d || !d.length) { el.innerHTML = '<div class="queue-row"><span style="color:var(--text3);font-size:12px">🎉 لا توجد أخطاء</span></div>'; return; }
+  el.innerHTML = d.map((e,i) =>
+    '<div class="queue-row"><span class="queue-num">'+(i+1)+'</span><span class="queue-name">'+esc(e.file)+'</span><span class="queue-type q-err">فشل</span><span style="font-size:11px;color:var(--text3);margin-right:auto">'+sz(e.size)+'</span></div>'
+  ).join('');
+}
+
+function toggleCfg(btn) { btn.className = 'toggle ' + (btn.className.includes('on') ? 'off' : 'on'); }
+
+async function cryptoAnalyze(input) {
+  const el = document.getElementById('crypto-results');
+  el.innerHTML = '<div class="queue-row"><span style="color:var(--text3)">جاري التحليل...</span></div>';
+  for (const file of input.files) {
+    const fd = new FormData(); fd.append('file', file);
+    try {
+      const r = await fetch('/api/crypto-analyze', {method:'POST', body:fd});
+      const d = await r.json();
+      const cls = d.xor_detected ? 'badge-green' : 'badge-amber';
+      const xorIcon = d.xor_detected ? '<i class="ti ti-circle-check"></i>' : '<i class="ti ti-circle-x"></i>';
+      el.innerHTML = `
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;margin-top:8px">
+          <div style="font-size:13px;font-weight:600;color:var(--neon);margin-bottom:10px">${esc(file.name)}</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px">
+            <div><span style="color:var(--text3)">الأنتروبي:</span> <b>${d.entropy}</b></div>
+            <div><span style="color:var(--text3)">النوع المحتمل:</span> <b>${d.likely}</b></div>
+            <div><span style="color:var(--text3)">XOR:</span> <span class="stat-badge ${cls}">${xorIcon} ${d.xor_detected ? 'مكتشف' : 'غير مكتشف'}</span></div>
+            <div><span style="color:var(--text3)">طول المفتاح:</span> <b>${d.key_length}</b></div>
+          </div>
+          ${d.key_hex ? `<div style="margin-top:8px;font-size:12px"><span style="color:var(--text3)">المفتاح المحتمل:</span> <code style="background:var(--bg);padding:2px 6px;border-radius:4px;color:var(--neon)">${d.key_hex}</code></div>` : ''}
+        </div>`;
+    } catch(e) { el.innerHTML = '<div class="queue-row"><span style="color:var(--red)">فشل التحليل</span></div>'; }
+  }
+  input.value = '';
+}
+
+async function handleCryptoDrop(e) {
+  e.preventDefault();
+  document.getElementById('cryptoDropZone').classList.remove('drag-over');
+  const el = document.getElementById('crypto-results');
+  for (const file of e.dataTransfer.files) {
+    const fd = new FormData(); fd.append('file', file);
+    try {
+      const r = await fetch('/api/crypto-analyze', {method:'POST', body:fd});
+      const d = await r.json();
+      el.innerHTML = `
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;margin-top:8px">
+          <div style="font-size:13px;font-weight:600;color:var(--neon);margin-bottom:10px">${esc(file.name)}</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px">
+            <div><span style="color:var(--text3)">الأنتروبي:</span> <b>${d.entropy}</b></div>
+            <div><span style="color:var(--text3)">النوع:</span> <b>${d.likely}</b></div>
+            <div><span style="color:var(--text3)">XOR:</span> <b>${d.xor_detected ? 'نعم' : 'لا'}</b></div>
+            <div><span style="color:var(--text3)">طول المفتاح:</span> <b>${d.key_length}</b></div>
+          </div>
+          ${d.key_hex ? `<div style="margin-top:8px;font-size:12px"><span style="color:var(--text3)">المفتاح:</span> <code style="background:var(--bg);padding:2px 6px;border-radius:4px;color:var(--neon)">${d.key_hex}</code></div>` : ''}
+        </div>`;
+    } catch(e) { el.innerHTML = '<div class="queue-row"><span style="color:var(--red)">فشل التحليل</span></div>'; }
+  }
+}
+
+async function loadPlugins() {
+  const el = document.getElementById('plugins-list');
+  const loc = document.getElementById('local-plugins');
+  const cnt = document.getElementById('plugins-count');
+  try {
+    const r = await fetch('/api/plugins');
+    const d = await r.json();
+    if (!d.plugins || !d.plugins.length) {
+      el.innerHTML = '<div class="queue-row"><span style="color:var(--text3);font-size:12px">لا توجد إضافات في المتجر</span></div>';
+      cnt.textContent = '0 إضافة';
+      return;
+    }
+    cnt.textContent = d.plugins.length + ' إضافة';
+    el.innerHTML = d.plugins.map(p => {
+      const isInstalled = p.installed;
+      return '<div class="queue-row"><span class="queue-name"><i class="ti ti-puzzle"></i> '+esc(p.name)+'</span><span style="font-size:11px;color:var(--text2)">'+esc(p.author)+' v'+esc(p.version)+'</span><span style="font-size:10px;color:var(--text3);flex:1">'+esc(p.description)+'</span>' +
+        (isInstalled
+          ? '<span class="stat-badge badge-green"><i class="ti ti-check"></i> مثبت</span>'
+          : '<button class="btn btn-neon" onclick="installPlugin(\''+esc(p.id)+'\',this)" style="padding:2px 10px;font-size:11px"><i class="ti ti-download"></i> تثبيت</button>') +
+        '</div>';
+    }).join('');
+    // local plugins
+    const installed = d.plugins.filter(p => p.installed);
+    if (installed.length) {
+      loc.innerHTML = installed.map(p =>
+        '<div class="queue-row"><span class="queue-name"><i class="ti ti-check"></i> '+esc(p.name)+'</span><span style="font-size:11px;color:var(--text2)">'+esc(p.version)+'</span><button class="btn btn-danger" onclick="uninstallPlugin(\''+esc(p.id)+'\',this)" style="padding:2px 10px;font-size:11px"><i class="ti ti-trash"></i></button></div>'
+      ).join('');
+    } else {
+      loc.innerHTML = '<div class="queue-row"><span style="color:var(--text3);font-size:12px">لم يتم تثبيت أي إضافات</span></div>';
+    }
+  } catch(e) { el.innerHTML = '<div class="queue-row"><span style="color:var(--text3);font-size:12px">خطأ في التحميل</span></div>'; }
+}
+
+async function installPlugin(id, btn) {
+  btn.disabled = true; btn.innerHTML = '<i class="ti ti-loader"></i> جاري...';
+  try {
+    const r = await fetch('/api/plugins/install', {method:'POST', body:JSON.stringify({id})});
+    const d = await r.json();
+    if (d.status === 'ok') {
+      btn.innerHTML = '<i class="ti ti-check"></i> تم';
+      btn.className = 'stat-badge badge-green';
+    } else {
+      btn.innerHTML = '<i class="ti ti-x"></i> فشل';
+      alert('فشل التثبيت: ' + d.message);
+    }
+  } catch(e) {
+    btn.innerHTML = '<i class="ti ti-x"></i> خطأ';
+  }
+  setTimeout(loadPlugins, 2000);
+}
+
+async function uninstallPlugin(id, btn) {
+  if (!confirm('إلغاء تثبيت الإضافة؟')) return;
+  await fetch('/api/plugins/uninstall', {method:'POST', body:JSON.stringify({id})});
+  loadPlugins();
+}
+
+async function loadLanguage() {
+  try {
+    const r = await fetch('/api/languages');
+    const d = await r.json();
+    const sel = document.getElementById('lang-select');
+    if (sel && d.current) sel.value = d.current;
+    const root = document.getElementById('html-root');
+    if (root && d.current) {
+      root.lang = d.current;
+      root.dir = d.current === 'ar' ? 'rtl' : 'ltr';
+    }
+  } catch(e) {}
+}
+
+async function switchLanguage(code) {
+  await fetch('/api/language/set', {method:'POST', body:JSON.stringify({code})});
+  loadLanguage();
+  location.reload();
+}
+
+async function checkUpdate() {
+  try {
+    const r = await fetch('/api/check-update');
+    const d = await r.json();
+    if (d.has_update) {
+      document.getElementById('update-version').textContent = d.local_version + ' → ' + d.remote_version;
+      document.getElementById('update-desc').textContent = (d.release_body || '').slice(0, 100);
+      document.getElementById('update-banner').style.display = 'block';
+    }
+  } catch(e) {}
+}
+
+async function applyUpdate() {
+  if (!confirm('تأكيد تحديث المشروع؟')) return;
+  try {
+    const r = await fetch('/api/check-update');
+    const d = await r.json();
+    if (d.release_url) {
+      window.open(d.release_url, '_blank');
+    }
+  } catch(e) {}
+}
+
+function dismissUpdate() {
+  document.getElementById('update-banner').style.display = 'none';
+}
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+function sz(b) { if(!b) return '0 B'; if(b<1024) return b+' B'; if(b<1048576) return (b/1024).toFixed(1)+' KB'; return (b/1048576).toFixed(1)+' MB'; }
+
+// auto refresh
+setInterval(refreshStatus, 3000);
+setInterval(loadLogs, 5000);
+setInterval(loadErrors, 5000);
+refreshStatus(); loadLogs(); loadErrors(); checkUpdate(); loadLanguage();
+const wt = document.getElementById('welcome-tip');
+if (wt) {
+  if (localStorage.getItem('welcome_dismissed') === '1' || window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true)
+    wt.style.display = 'none';
+}
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/static/sw.js')
+            .then(reg => console.log('SW registered:', reg.scope))
+            .catch(err => console.log('SW failed:', err));
+    });
+}
+</script>
+</body>
+</html>
