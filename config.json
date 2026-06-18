@@ -1,39 +1,29 @@
 {
-    "active_mode": "auto",
-    "paths": {
-        "input_dir": "inputs",
-        "output_dir": "outputs",
-        "log_dir": "logs",
-        "error_dir": "errors"
-    },
-    "settings": {
-        "scan_interval_seconds": 2,
-        "auto_delete_input": false,
-        "process_subdirectories": true,
-        "extract_nested": true,
-        "xor_key": null,
-        "stream_chunk_size": 1048576,
-        "race_wait_seconds": 2,
-        "enable_hashing": true,
-        "enable_validation": true,
-        "parallel": false,
-        "max_workers": 4,
-        "conflict_mode": "rename",
-        "show_progress": true
-    },
-    "update": {
-        "remote_url": null,
-        "branch": "main",
-        "auto_check": false
-    },
-    "language": "en",
-    "auto_search_on_error": true,
-    "search_sites": [
-        "stackoverflow.com",
-        "github.com",
-        "reddit.com",
-        "gamedev.net",
-        "zenhax.com",
-        "forum.xentax.com"
-    ]
+  "active_mode": "auto",
+  "paths": {
+    "input_dir": "inputs",
+    "output_dir": "outputs",
+    "log_dir": "logs",
+    "error_dir": "errors"
+  },
+  "settings": {
+    "scan_interval_seconds": 2,
+    "auto_delete_input": false,
+    "process_subdirectories": true,
+    "extract_nested": true,
+    "xor_key": null,
+    "stream_chunk_size": 1048576,
+    "race_wait_seconds": 2,
+    "enable_hashing": true,
+    "enable_validation": true,
+    "parallel": false,
+    "max_workers": 4,
+    "conflict_mode": "rename"
+  },
+  "language": "en",
+  "auto_search_on_error": true,
+  "search_sites": [
+    "stackoverflow.com", "github.com", "reddit.com",
+    "gamedev.net", "zenhax.com", "forum.xentax.com"
+  ]
 }
