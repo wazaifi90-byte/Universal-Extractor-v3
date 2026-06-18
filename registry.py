@@ -18,6 +18,7 @@ def _init():
     from decoders.unreal_pak import UnrealPak
     from decoders.cocos2dx import Cocos2dx
     from decoders.gameloft import Gameloft
+    from decoders.mc4_gameloft import MC4Gameloft
     from decoders.konami import konami_extract
     from decoders.image_helper import decode_dxt
     from decoders.lzss import lzss_decode
@@ -56,6 +57,7 @@ def _init():
         "gameloft_pak": _gameloft_wrap,
         "gameloft_tex": _gameloft_wrap,
         "gameloft_sh": _gameloft_wrap,
+        "mc4_gameloft": _mc4_wrap,
         "konami_cpk": _konami_wrap,
         "konami_afs": _konami_wrap,
         "konami_arc": _konami_wrap,
@@ -142,6 +144,10 @@ def _cocos2d_wrap(data, output_dir, filename):
 
 def _gameloft_wrap(data, output_dir, filename):
     return Gameloft.extract(data, output_dir, filename)
+
+
+def _mc4_wrap(data, output_dir, filename):
+    return MC4Gameloft.extract(data, output_dir, filename)
 
 
 def _konami_wrap(data, output_dir, filename):
