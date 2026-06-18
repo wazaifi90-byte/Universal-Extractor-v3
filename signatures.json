@@ -395,5 +395,11 @@
         "magic": ["0x58 0x41 0x00 0x00"],
         "extension": ".xa",
         "engine": "miles"
+    },
+    "mc4_gameloft": {
+        "magic": ["0x50 0x4B 0x03 0x04"],
+        "extension": ".data",
+        "engine": "gameloft",
+        "sub_check": "mc4"
     }
 }
